@@ -44,12 +44,12 @@ const profileTitle = document.querySelectorAll(".profile-title");
 const profiles = document.querySelectorAll(".profiles");
 const repositories = document.querySelector(".repositories");
 
-console.log(profileTitle);
-
 function eventListener(){
     form.addEventListener("submit", function(e) {
         request.getUser(`https://api.github.com/users/${searchUser.value}`)
             .then(data => {
+                profiles.forEach(p => p.innerHTML = "");
+                repositories.innerHTML = "";
                 profileTitle.forEach(p => p.classList.remove("d-none"));
                 return {
                     followersUrl: data.followers_url,
