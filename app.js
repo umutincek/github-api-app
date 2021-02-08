@@ -50,30 +50,42 @@ function eventListener(){
             .then(data => {
                 profiles.forEach(p => p.innerHTML = "");
                 repositories.innerHTML = "";
-                profileTitle.forEach(p => p.classList.remove("d-none"));
-                return {
-                    followersUrl: data.followers_url,
-                    followingUrl: `https://api.github.com/users/${data.login}/following`,
-                    reposUrl: data.repos_url,
+                if(data.login) {
+                    profileTitle.forEach(p => p.classList.remove("d-none"));
+                    return {
+                        followersUrl: data.followers_url,
+                        followingUrl: `https://api.github.com/users/${data.login}/following`,
+                        reposUrl: data.repos_url,
+                    }
+                } else {
+                    profileTitle.forEach(p => {
+                        if(!p.classList.contains("d-none")) {
+                            p.classList.add("d-none");
+                        }
+                    });
+                    alert("Böyle bir kullanıcı adı bulunmamaktadır!");
+                    return false;
                 }
             })
             .then(url => {
-                request.getFollowers(url.followersUrl)
-                    .then(data => {
-                        data.map(d => profileHtml(d.avatar_url, d.login, d.html_url, 0));
-                    })
-                    .catch(err => console.log(err));
-                request.getFollowing(url.followingUrl)
-                    .then(data => {
-                        data.map(d => profileHtml(d.avatar_url, d.login, d.html_url, 1));
-                    })
-                    .catch(err => console.log(err));
-                request.getRepositories(url.reposUrl)
-                    .then(data => {
-                        data.map(d => reposHtml(d.full_name, d.html_url, d.description, d.language));
-                    })
-                    .catch(err => console.log(err));
-            })
+                if(url) {
+                    request.getFollowers(url.followersUrl)
+                        .then(data => {
+                            data.map(d => profileHtml(d.avatar_url, d.login, d.html_url, 0));
+                        })
+                        .catch(err => console.log(err));
+                    request.getFollowing(url.followingUrl)
+                        .then(data => {
+                            data.map(d => profileHtml(d.avatar_url, d.login, d.html_url, 1));
+                        })
+                        .catch(err => console.log(err));
+                    request.getRepositories(url.reposUrl)
+                        .then(data => {
+                            data.map(d => reposHtml(d.full_name, d.html_url, d.description, d.language));
+                        })
+                        .catch(err => console.log(err));
+                    }
+            }) 
             .catch(err => console.log(err));
 
         e.preventDefault();
