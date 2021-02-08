@@ -3,3 +3,17 @@
     align-items: center;
     justify-content: center;
 }
+
+.profile-info {
+    font-size: 0.3rem;
+}
+
+.profile-info li {
+    display: inline;
+    margin: 0px 0.2rem;
+}
+
+.profile-photo img {
+    width: 100%;
+    height: 100px;
+}

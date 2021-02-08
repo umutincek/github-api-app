@@ -43,14 +43,27 @@ const searchUser = document.querySelector("#searchUser");
 const profileTitle = document.querySelectorAll(".profile-title");
 const profiles = document.querySelectorAll(".profiles");
 const repositories = document.querySelector(".repositories");
+const userProfile = document.querySelector(".user-profile");
+const profilePhoto = document.querySelector(".profile-photo");
+const profileInfo = document.querySelector(".profile-info");
 
 function eventListener(){
     form.addEventListener("submit", function(e) {
+        profilePhoto.innerHTML = "";
+        profileInfo.innerHTML = "";
         request.getUser(`https://api.github.com/users/${searchUser.value}`)
             .then(data => {
                 profiles.forEach(p => p.innerHTML = "");
                 repositories.innerHTML = "";
                 if(data.login) {
+                    userProfileHtml({
+                        imageUrl: data.avatar_url,
+                        infos: [
+                            data.public_repos,
+                            data.followers,
+                            data.following,
+                        ]
+                    });
                     profileTitle.forEach(p => p.classList.remove("d-none"));
                     return {
                         followersUrl: data.followers_url,
@@ -93,6 +106,24 @@ function eventListener(){
 }
 
 eventListener();
+
+function userProfileHtml(profileData) {
+    const userTitle = ["repositories", "followers", "following"];
+    const photo = document.createElement("img");
+    photo.src = profileData.imageUrl;
+    photo.className = "radius-50";
+    profilePhoto.appendChild(photo);
+
+    for(let i = 0; i < profileData.infos.length; i++) {
+        const infoListItem = document.createElement("li");
+        const link = document.createElement("a");
+        link.textContent = `${profileData.infos[i]} ${userTitle[i]}`;
+        link.href = `#${userTitle[i]}`;
+        infoListItem.appendChild(link);
+        
+        profileInfo.appendChild(infoListItem);
+    }
+}
 
 function profileHtml(imageUrl, name, htmlUrl, index)  {
     const cardWrapper = document.createElement("div");

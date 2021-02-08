@@ -32,6 +32,33 @@ section {
   margin: 2rem auto;
 }
 
+    .user-profile {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 4rem;
+    }
+        .profile-photo {
+            width: 20%;
+        }
+            .profile-photo img {
+                width: 100%;
+                height: 300px;
+            }
+
+        .profile-info {
+            width: 75%;
+            text-align: center;
+            font-size: 2rem;
+        }
+            .profile-info li {
+                display: inline;
+                margin: 0px 3rem;
+            }
+            .profile-info a {
+                color: #000;
+            }
+
     .profiles {
         display: flex;
         flex-wrap: wrap;
