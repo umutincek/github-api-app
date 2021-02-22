@@ -1,38 +1,26 @@
 class Request {
-    getUser(url) {
-        return new Promise((resolve, reject) => {
-            fetch(url)
-                .then(response => response.json())
-                .then(data => resolve(data))
-                .catch(err => reject(err));
-        })
+    async getUser(url) {
+        const response = await fetch(url);
+        const data = await response.json();
+        return data;
     };
 
-    getFollowers(url) {
-        return new Promise((resolve, reject) => {
-            fetch(url)
-                .then(response => response.json())
-                .then(data => resolve(data))
-                .catch(err => reject(err));
-        })
+    async getFollowers(url) {
+        const response = await fetch(url);
+        const data = await response.json();
+        return data;
     };
 
-    getFollowing(url) {
-        return new Promise((resolve, reject) => {
-            fetch(url)
-                .then(response => response.json())
-                .then(data => resolve(data))
-                .catch(err => reject(err));
-        })
+    async getFollowing(url) {
+        const response = await fetch(url);
+        const data = await response.json();
+        return data;
     };
 
-    getRepositories(url) {
-        return new Promise((resolve, reject) => {
-            fetch(url)
-                .then(response => response.json())
-                .then(data => resolve(data))
-                .catch(err => reject(err));
-        })
+    async getRepositories(url) {
+        const response = await fetch(url);
+        const data = await response.json();
+        return data;
     };
 }
 
